@@ -1,6 +1,6 @@
 #!/bin/bash
 (
-sleep $[($RANDOM % 30)]
+sleep $[($RANDOM % 10)]
 while ! warp-cli --accept-tos register; do
 	sleep 1
 	>&2 echo "Awaiting warp-svc become online..."
