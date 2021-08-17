@@ -1,8 +1,7 @@
 #!/bin/bash
 (
-sleep $[($RANDOM % 10)]
 while [ ! -f /var/lib/cloudflare-warp/reg.json ]; do
-	sleep 1
+	sleep $[($RANDOM % 10)]
 	>&2 echo "Awaiting warp-svc become online and registered..."
 	warp-cli --accept-tos register
 done
