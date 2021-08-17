@@ -1,0 +1,34 @@
+version: "3.5"
+networks:
+  warp:
+services:
+  haproxy:
+    image: eeacms/haproxy
+    ports:
+      - "0.0.0.0:40000:40000"
+    networks:
+      - warp
+    restart: always
+    depends_on:
+      - warp
+    environment:
+      LOG_LEVEL: info
+      TIMEOUT_CONNECT: 5000
+      TIMEOUT_CLIENT: 5000
+      TIMEOUT_SERVER: 5000
+      FRONTEND_PORT: 40000
+      BACKENDS_MODE: tcp
+      # dns load balance over multiple instances of warp
+      DNS_ENABLED: "true"
+      BACKENDS: "warp:40000"
+  warp:
+    # use docker-compose to scale multiple instances of this service
+    # --scale warp=10
+    image: warp-proxy
+    restart: always
+    environment:
+      RECONNECT_INTERVAL: 100
+    networks:
+      - warp
+    volumes:
+      - /var/lib/cloudflare-warp
