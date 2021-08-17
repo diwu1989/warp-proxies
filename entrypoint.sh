@@ -1,9 +1,10 @@
 #!/bin/bash
 (
 sleep $[($RANDOM % 10)]
-while ! warp-cli --accept-tos register; do
+while [ ! -f /var/lib/cloudflare-warp/reg.json ]; do
 	sleep 1
-	>&2 echo "Awaiting warp-svc become online..."
+	>&2 echo "Awaiting warp-svc become online and registered..."
+	warp-cli --accept-tos register
 done
 warp-cli --accept-tos set-mode proxy
 warp-cli --accept-tos set-proxy-port 40001
