@@ -24,7 +24,7 @@ services:
   warp:
     # use docker-compose to scale multiple instances of this service
     # --scale warp=10
-    image: warp-proxy
+    image: diwu1989/warp-proxies
     restart: always
     environment:
       RECONNECT_INTERVAL: 100
